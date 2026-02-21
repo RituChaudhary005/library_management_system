@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Transactions</h2>
+
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>User</th>
+<th>Book</th>
+<th>Issue Date</th>
+<th>Return Date</th>
+<th>Fine</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+{% for t in data %}
+<tr>
+<td>{{ t.user.username }}</td>
+<td>{{ t.book.name }}</td>
+<td>{{ t.issue_date }}</td>
+<td>{{ t.return_date }}</td>
+<td>₹ {{ t.fine }}</td>
+<td>
+{% if not t.returned %}
+    <a href="{% url 'return_book' t.id %}" class="btn btn-sm btn-warning">Return</a>
+{% else %}
+    <span class="badge bg-success">Returned</span>
+{% endif %}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

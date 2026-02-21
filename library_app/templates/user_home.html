@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="mb-4">User Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <a href="{% url 'book_list' %}" class="btn btn-primary w-100 mb-3">Browse Books</a>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'transactions' %}" class="btn btn-success w-100 mb-3">My Transactions</a>
+    </div>
+</div>
+
+{% endblock %}
