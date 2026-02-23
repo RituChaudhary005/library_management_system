@@ -25,7 +25,9 @@ def add_book(request):
         Book.objects.create(
             name=request.POST["name"],
             author=request.POST["author"],
-            serial_no=request.POST["serial"]
+            serial_no=request.POST["serial"],
+            
+           
         )
         return redirect("book_list")
 
