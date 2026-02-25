@@ -15,12 +15,13 @@ def root_redirect(request):
 
 urlpatterns = [
     path('', root_redirect),
-    path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),  # 👈 VERY IMPORTANT
     path('home/', views.home, name='home'),
      path('books/', views.book_list, name='book_list'),
     path('transactions/', views.transactions, name='transactions'),
     path('issue/<int:id>/', views.issue_book, name='issue_book'),
     path('return/<int:id>/', views.return_book, name='return_book'),
+    path('signup/', views.signup, name='signup'),
+    
     
 ]

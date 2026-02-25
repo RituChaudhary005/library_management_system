@@ -2,8 +2,31 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
 from .models import Book, Transaction
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from .models import Membership
 
 
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        membership_type = request.POST.get("membership_type", "6M")
+
+        if form.is_valid():
+            user = form.save()
+
+            Membership.objects.create(
+                user=user,
+                membership_type=membership_type
+            )
+
+            login(request, user)
+            return redirect('home')
+
+    else:
+        form = UserCreationForm()
+
+    return render(request, "signup.html", {"form": form})
 # Check Admin
 def is_admin(user):
     return user.is_superuser

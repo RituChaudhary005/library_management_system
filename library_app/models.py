@@ -14,6 +14,38 @@ class Book(models.Model):
         return f"{self.name} ({self.serial_no})"
 
 
+
+class Membership(models.Model):
+
+    MEMBERSHIP_CHOICES = [
+        ('6M', '6 Months'),
+        ('1Y', '1 Year'),
+        ('2Y', '2 Years'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    membership_type = models.CharField(
+        max_length=3,
+        choices=MEMBERSHIP_CHOICES,
+        default='6M'
+    )
+    start_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.end_date:
+            if self.membership_type == '6M':
+                self.end_date = self.start_date + timedelta(days=180)
+            elif self.membership_type == '1Y':
+                self.end_date = self.start_date + timedelta(days=365)
+            elif self.membership_type == '2Y':
+                self.end_date = self.start_date + timedelta(days=730)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.membership_type}"
+
+
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
