@@ -33,7 +33,7 @@ library_project/
 │
 ├── library_app/
 ├── templates/
-├── static/
+├── library_project/
 ├── db.sqlite3
 └── manage.py
 ```
